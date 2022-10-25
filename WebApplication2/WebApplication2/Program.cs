@@ -31,8 +31,6 @@ builder.Services.AddMassTransit(x =>
 
             e.Consumer<ThirdConsumer>(ctx);
             //e.ConfigureConsumer<ThirdConsumer>(ctx);
-
-            //e.Bind<PublishMessage>();
         });
     });
 });
