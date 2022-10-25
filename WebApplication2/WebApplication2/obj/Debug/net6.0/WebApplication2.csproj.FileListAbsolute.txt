@@ -30,3 +30,10 @@ D:\massR\MassR\WebApplication2\WebApplication2\obj\Debug\net6.0\WebApplication2.
 D:\massR\MassR\WebApplication2\WebApplication2\obj\Debug\net6.0\ref\WebApplication2.dll
 D:\massR\MassR\WebApplication2\WebApplication2\obj\Debug\net6.0\WebApplication2.pdb
 D:\massR\MassR\WebApplication2\WebApplication2\obj\Debug\net6.0\WebApplication2.genruntimeconfig.cache
+D:\massR\MassR\WebApplication2\WebApplication2\bin\Debug\net6.0\ClassLibrary1.dll
+D:\massR\MassR\WebApplication2\WebApplication2\bin\Debug\net6.0\ClassLibrary1.pdb
+D:\massR\MassR\WebApplication2\WebApplication2\bin\Debug\net6.0\WebApplication1.deps.json
+D:\massR\MassR\WebApplication2\WebApplication2\bin\Debug\net6.0\WebApplication1.runtimeconfig.json
+D:\massR\MassR\WebApplication2\WebApplication2\bin\Debug\net6.0\WebApplication1.exe
+D:\massR\MassR\WebApplication2\WebApplication2\bin\Debug\net6.0\WebApplication1.dll
+D:\massR\MassR\WebApplication2\WebApplication2\bin\Debug\net6.0\WebApplication1.pdb

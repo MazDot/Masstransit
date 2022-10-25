@@ -1,4 +1,5 @@
 using MassTransit;
+using WebApplication1.Messages;
 using WebApplication2;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,7 +23,7 @@ builder.Services.AddMassTransit(x =>
             //{
             //    d.ExchangeType = "topic";
             //    d.RoutingKey = "WA1.Test.WA2";
-            //});
+            ////});
             //e.Bind<ThirdMessage>(d =>
             //{
             //    d.ExchangeType = "topic";
@@ -31,6 +32,22 @@ builder.Services.AddMassTransit(x =>
 
             e.Consumer<ThirdConsumer>(ctx);
             //e.ConfigureConsumer<ThirdConsumer>(ctx);
+        });
+
+        cfg.ReceiveEndpoint("C1_Queue", e =>
+        {
+            e.Bind<C1Message>(d =>
+            {
+                d.ExchangeType = "topic";
+                d.RoutingKey = "WA2.Test.WA1";
+            });
+        });
+
+        cfg.Publish<C1Message>(d =>
+        {
+            d.Durable = false;
+            d.AutoDelete = true;
+            d.ExchangeType = "topic";
         });
     });
 });

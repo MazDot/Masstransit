@@ -4,4 +4,9 @@
     {
         public string Text { get; set; }
     }
+    public class C1Message
+    {
+        public string Text { get; set; }
+    }
+
 }

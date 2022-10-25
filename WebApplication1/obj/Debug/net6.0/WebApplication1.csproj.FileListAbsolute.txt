@@ -30,3 +30,5 @@ D:\massR\MassR\WebApplication1\obj\Debug\net6.0\WebApplication1.dll
 D:\massR\MassR\WebApplication1\obj\Debug\net6.0\ref\WebApplication1.dll
 D:\massR\MassR\WebApplication1\obj\Debug\net6.0\WebApplication1.pdb
 D:\massR\MassR\WebApplication1\obj\Debug\net6.0\WebApplication1.genruntimeconfig.cache
+D:\MassR\MassR\WebApplication1\bin\Debug\net6.0\ClassLibrary1.dll
+D:\MassR\MassR\WebApplication1\bin\Debug\net6.0\ClassLibrary1.pdb

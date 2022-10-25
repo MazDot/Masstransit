@@ -1,3 +1,4 @@
+using ClassLibrary1;
 using MassTransit;
 using WebApplication1;
 using WebApplication1.Messages;
@@ -13,6 +14,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddMassTransit(x =>
 {
+    x.AddConsumer<C1Consumer>();
     x.AddConsumer<Consumer>();
     x.AddConsumer<SecondConsumer>();
     x.UsingRabbitMq((ctx, cfg) =>
@@ -36,9 +38,10 @@ builder.Services.AddMassTransit(x =>
             d.Durable = false;
             d.AutoDelete = true; 
             d.ExchangeType = "topic";
+            
         });
 
-        cfg.Publish<IgnoreMessage>(d =>
+        cfg.Publish<C1Message>(d =>
         {
             d.Exclude = true;
         });
@@ -68,10 +71,18 @@ builder.Services.AddMassTransit(x =>
 
         cfg.ReceiveEndpoint("Third_Queue", e =>
         {
-            e.Bind<ThirdMessage>(d =>
+            e.Bind<SharedMessage>(d =>
             {
                 d.ExchangeType = "topic";
                 d.RoutingKey = "WA1.Test.WA2";
+            });
+        });
+        cfg.ReceiveEndpoint("C1_Queue", e =>
+        {
+            e.Bind<C1Message>(d =>
+            {
+                d.ExchangeType = "topic";
+                d.RoutingKey = "WA2.Test.WA1";
             });
         });
 

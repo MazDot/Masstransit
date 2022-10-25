@@ -3,7 +3,7 @@ version: '3.4'
 services:
   webapplication1:
     image: webapplication1:dev
-    container_name: WebApplication1_1
+    container_name: WebApplication1
     build:
       target: base
       labels:
@@ -30,7 +30,7 @@ services:
     tty: true
   webapplication2:
     image: webapplication2:dev
-    container_name: WebApplication2_1
+    container_name: WebApplication2
     build:
       target: base
       labels:

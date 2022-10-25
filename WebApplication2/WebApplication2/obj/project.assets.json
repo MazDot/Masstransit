@@ -341,6 +341,35 @@
         "build": {
           "buildTransitive/netcoreapp3.1/_._": {}
         }
+      },
+      "ClassLibrary1/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/ClassLibrary1.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/ClassLibrary1.dll": {}
+        }
+      },
+      "WebApplication1/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "ClassLibrary1": "1.0.0",
+          "MassTransit.RabbitMQ": "8.0.7",
+          "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": "1.14.0",
+          "Swashbuckle.AspNetCore": "6.2.3"
+        },
+        "compile": {
+          "bin/placeholder/WebApplication1.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WebApplication1.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       }
     }
   },
@@ -1057,13 +1086,25 @@
         "system.threading.channels.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "ClassLibrary1/1.0.0": {
+      "type": "project",
+      "path": "../../ClassLibrary1/ClassLibrary1.csproj",
+      "msbuildProject": "../../ClassLibrary1/ClassLibrary1.csproj"
+    },
+    "WebApplication1/1.0.0": {
+      "type": "project",
+      "path": "../../WebApplication1/WebApplication1.csproj",
+      "msbuildProject": "../../WebApplication1/WebApplication1.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
+      "ClassLibrary1 >= 1.0.0",
       "MassTransit.RabbitMQ >= 8.0.7",
       "Microsoft.VisualStudio.Azure.Containers.Tools.Targets >= 1.14.0",
-      "Swashbuckle.AspNetCore >= 6.2.3"
+      "Swashbuckle.AspNetCore >= 6.2.3",
+      "WebApplication1 >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -1072,11 +1113,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\massR\\MassR\\WebApplication2\\WebApplication2\\WebApplication2.csproj",
+      "projectUniqueName": "D:\\MassR\\MassR\\WebApplication2\\WebApplication2\\WebApplication2.csproj",
       "projectName": "WebApplication2",
-      "projectPath": "D:\\massR\\MassR\\WebApplication2\\WebApplication2\\WebApplication2.csproj",
+      "projectPath": "D:\\MassR\\MassR\\WebApplication2\\WebApplication2\\WebApplication2.csproj",
       "packagesPath": "C:\\Users\\h.mazaheri\\.nuget\\packages\\",
-      "outputPath": "D:\\massR\\MassR\\WebApplication2\\WebApplication2\\obj\\",
+      "outputPath": "D:\\MassR\\MassR\\WebApplication2\\WebApplication2\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\h.mazaheri\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -1092,7 +1133,14 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "D:\\MassR\\MassR\\ClassLibrary1\\ClassLibrary1.csproj": {
+              "projectPath": "D:\\MassR\\MassR\\ClassLibrary1\\ClassLibrary1.csproj"
+            },
+            "D:\\MassR\\MassR\\WebApplication1\\WebApplication1.csproj": {
+              "projectPath": "D:\\MassR\\MassR\\WebApplication1\\WebApplication1.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

@@ -20,7 +20,32 @@
       "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
       "DisplayName": "Miscellaneous Files",
       "ColorIndex": -1
+    },
+    "f27fb357-ca86-4eb5-9aa8-c8131e064860": {
+      "ProjectGuid": "f27fb357-ca86-4eb5-9aa8-c8131e064860",
+      "DisplayName": "WebApplication2",
+      "ColorIndex": 3
+    },
+    "412c5ce7-1fdc-4508-a68a-80ff44693398": {
+      "ProjectGuid": "412c5ce7-1fdc-4508-a68a-80ff44693398",
+      "DisplayName": "WebApplication2",
+      "ColorIndex": 4
+    },
+    "97af790b-1a78-4279-a9c5-30a064e99432": {
+      "ProjectGuid": "97af790b-1a78-4279-a9c5-30a064e99432",
+      "DisplayName": "WebApplication2",
+      "ColorIndex": 5
+    },
+    "e0bcd631-16c8-4301-92c3-3b1396b4aae5": {
+      "ProjectGuid": "e0bcd631-16c8-4301-92c3-3b1396b4aae5",
+      "DisplayName": "ConsoleApp1",
+      "ColorIndex": 6
+    },
+    "f13658d1-9705-45aa-a2f4-7f3a918ca91d": {
+      "ProjectGuid": "f13658d1-9705-45aa-a2f4-7f3a918ca91d",
+      "DisplayName": "ClassLibrary1",
+      "ColorIndex": 7
     }
   },
-  "NextColorIndex": 3
+  "NextColorIndex": 8
 }

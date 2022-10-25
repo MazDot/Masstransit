@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   webapplication1:
-    container_name: WebApplication1_1
+    container_name: WebApplication1
     build:
       labels:
         com.microsoft.created-by: "visual-studio"
@@ -21,7 +21,7 @@ services:
       com.microsoft.visual-studio.project-name: "WebApplication1"
     tty: true
   webapplication2:
-    container_name: WebApplication2_1
+    container_name: WebApplication2
     build:
       labels:
         com.microsoft.created-by: "visual-studio"
