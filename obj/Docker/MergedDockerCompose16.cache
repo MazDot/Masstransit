@@ -1,0 +1,54 @@
+services:
+  rabbitmq:
+    container_name: rabbitmq
+    environment:
+      RABBITMQ_PASSWORD: ljkafkjnL12
+      RABBITMQ_USERNAME: rabbituser
+    image: rabbitmq:3-management
+    ports:
+    - published: 5672
+      target: 5672
+    - published: 15672
+      target: 15672
+    restart: always
+  webapplication1:
+    build:
+      context: D:\MassR\MassR
+      dockerfile: WebApplication1/Dockerfile
+      labels:
+        com.microsoft.created-by: visual-studio
+        com.microsoft.visual-studio.project-name: WebApplication1
+      target: base
+    container_name: WebApplication1_1
+    entrypoint: tail -f /dev/null
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS: "true"
+      DOTNET_USE_POLLING_FILE_WATCHER: '1'
+      NUGET_FALLBACK_PACKAGES: ''
+    image: webapplication1:dev
+    labels:
+      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /root/.nuget/packages  "/app/bin/Debug/net6.0/WebApplication1.dll"'
+      com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof
+        dotnet); then kill $$PID; fi"
+      com.microsoft.visualstudio.debuggee.program: dotnet
+      com.microsoft.visualstudio.debuggee.workingdirectory: /app
+    ports:
+    - published: 8085
+      target: 80
+    - published: 44003
+      target: 443
+    tty: true
+    volumes:
+    - D:\MassR\MassR\WebApplication1:/app:rw
+    - C:\Users\h.mazaheri\vsdbg\vs2017u5:/remote_debugger:rw
+    - C:\Users\h.mazaheri\AppData\Roaming\ASP.NET\Https:/root/.aspnet/https:ro
+    - C:\Users\h.mazaheri\AppData\Roaming\Microsoft\UserSecrets:/root/.microsoft/usersecrets:ro
+    - C:\Users\h.mazaheri\.nuget\packages:/root/.nuget/packages:ro
+    - D:\MassR\MassR:/src:rw
+  webapplication2:
+    build:
+      context: D:\MassR\MassR
+      dockerfile: WebApplication2/Dockerfile
+    image: webapplication2
+version: '3.4'

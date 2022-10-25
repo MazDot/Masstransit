@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  webapplication1:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "8085:80"
+      - "44003:443"
+
+  webapplication2:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "8086:80"
+      - "44004:443"
+
+  rabbitmq:
+    container_name: rabbitmq
+    restart: always
+    ports:
+        - "5672:5672"
+        - "15672:15672"

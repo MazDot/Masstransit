@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  webapplication1:
+    image: ${DOCKER_REGISTRY-}webapplication1
+    build:
+      context: .
+      dockerfile: WebApplication1/Dockerfile
+
+  webapplication2:
+    image: ${DOCKER_REGISTRY-}webapplication2
+    build:
+      context: .
+      dockerfile: WebApplication2/WebApplication2/Dockerfile
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    environment:
+        - RABBITMQ_USERNAME=rabbituser
+        - RABBITMQ_PASSWORD=ljkafkjnL12
+    ports:
+        - 5672:5672
+        - 15672:15672
