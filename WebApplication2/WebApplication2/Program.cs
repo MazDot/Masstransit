@@ -1,6 +1,10 @@
+using ClassLibrary1;
 using MassTransit;
+using WebApplication1.InterfaceMessage;
 using WebApplication1.Messages;
 using WebApplication2;
+using WebApplication2.Consumer;
+using WebApplication2.InterfaceMessage;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +18,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddMassTransit(x =>
 {
     x.AddConsumer<ThirdConsumer>();
+    x.AddConsumer<InterfaceInProjConsumer>();
+    x.AddConsumer<InterfaceSharedConsumer>();
     x.UsingRabbitMq((ctx, cfg) =>
     {
 
@@ -49,6 +55,28 @@ builder.Services.AddMassTransit(x =>
             d.AutoDelete = true;
             d.ExchangeType = "topic";
         });
+
+        cfg.ReceiveEndpoint("interfaceSharedTopic", e =>
+        {
+            //e.Bind<InterfaceSharedMessage>(d =>
+            //{
+            //    d.ExchangeType = "topic";
+            //    d.RoutingKey = "WA1.InterfaceShared.WA2";
+            //});
+            e.Consumer<InterfaceSharedConsumer>(ctx);
+        });
+
+        cfg.ReceiveEndpoint("interfaceInProjTopic", e =>
+        {
+            //e.Bind<InterfaceWA1Message>(d =>
+            //{
+            //    d.ExchangeType = "topic";
+            //    d.RoutingKey = "WA1.InterfaceInProj.WA2";
+            //});
+            e.Consumer<InterfaceInProjConsumer>(ctx);
+        });
+
+
     });
 });
 

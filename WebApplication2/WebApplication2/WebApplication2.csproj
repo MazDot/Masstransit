@@ -19,4 +19,8 @@
     <ProjectReference Include="..\..\WebApplication1\WebApplication1.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Message\" />
+  </ItemGroup>
+
 </Project>

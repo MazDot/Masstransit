@@ -1,6 +1,7 @@
 using ClassLibrary1;
 using MassTransit;
 using WebApplication1;
+using WebApplication1.InterfaceMessage;
 using WebApplication1.Messages;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -41,6 +42,14 @@ builder.Services.AddMassTransit(x =>
             
         });
 
+        cfg.Publish<InterfaceSharedMessage>(d =>
+        {
+            d.Durable = false;
+            d.AutoDelete = true;
+            d.ExchangeType = "topic";
+
+        });
+
         cfg.Publish<C1Message>(d =>
         {
             d.Exclude = true;
@@ -79,10 +88,34 @@ builder.Services.AddMassTransit(x =>
         });
         cfg.ReceiveEndpoint("C1_Queue", e =>
         {
-            e.Bind<C1Message>(d =>
+            e.Consumer<C1Consumer>(ctx);
+        });
+
+        cfg.Publish<InterfaceSharedMessage>(d =>
+        {
+            d.ExchangeType = "topic";
+        });
+
+        cfg.ReceiveEndpoint("interfaceSharedTopic", e =>
+        {
+            e.Bind<InterfaceSharedMessage>(d =>
             {
                 d.ExchangeType = "topic";
-                d.RoutingKey = "WA2.Test.WA1";
+                d.RoutingKey = "WA1.InterfaceShared.WA2";
+            });
+        });
+
+        cfg.Publish<InterfaceWA1Message>(d =>
+        {
+            d.ExchangeType = "topic";
+        });
+
+        cfg.ReceiveEndpoint("interfaceInProjTopic", e =>
+        {
+            e.Bind<InterfaceWA1Message>(d =>
+            {
+                d.ExchangeType = "topic";
+                d.RoutingKey = "WA2.InterfaceInProj.WA1";
             });
         });
 
