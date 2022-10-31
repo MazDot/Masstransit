@@ -1,8 +1,7 @@
-﻿using ClassLibrary1;
-using MassTransit;
+﻿using MassTransit;
 using WebApplication1.Messages;
 
-namespace WebApplication1
+namespace WebApplication3
 {
     public class C1Consumer : IConsumer<C1Message>
     {
@@ -17,5 +16,4 @@ namespace WebApplication1
             return Task.CompletedTask;
         }
     }
-
 }

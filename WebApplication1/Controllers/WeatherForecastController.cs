@@ -21,25 +21,26 @@ namespace WebApplication1.Controllers
         [HttpGet("{Text}/GetWeatherForecast")]
         public async Task<IActionResult> Get(string Text)
         {
-            await _endpoint.Publish<PublishMessage>(new { Text = Text });
+            await _endpoint.Publish<SharedMessage>(new { Text = Text }, x => 
+            {
+                x.SetRoutingKey("WA1.Test.WA2");
+                
+            });
 
             return Ok();
         }
 
-        [HttpGet("{Text}/InterfaceSharedPublish")]
-        public async Task<IActionResult> GetSharedTopic(string Text)
+        [HttpGet("{Text}/GetAnother")]
+        public async Task<IActionResult> GetAnother(string Text)
         {
-            await _endpoint.Publish<InterfaceSharedMessage>(new { Text = Text }, x => x.SetRoutingKey("WA1.InterfaceShared.WA2"));
+            await _endpoint.Publish<ThirdSharedMessage>(new { Text = Text }, x =>
+            {
+                x.SetRoutingKey("WA1.Test.WA3");
+
+            });
 
             return Ok();
         }
 
-        [HttpGet("{Text}/InterfaceInProjPublish")]
-        public async Task<IActionResult> GetInProjTopic(string Text)
-        {
-            await _endpoint.Publish<InterfaceWA1Message>(new { Text = Text }, x => x.SetRoutingKey("WA1.InterfaceInProj.WA2"));
-
-            return Ok();
-        }
     }
 }

@@ -6,18 +6,31 @@ services:
     build:
       context: .
       dockerfile: WebApplication1/Dockerfile
+    depends_on:
+    - rabbitmq
 
   webapplication2:
     image: ${DOCKER_REGISTRY-}webapplication2
     build:
       context: .
       dockerfile: WebApplication2/WebApplication2/Dockerfile
+    depends_on: 
+    - webapplication1
+
+  webapplication3:
+    image: ${DOCKER_REGISTRY-}webapplication3
+    build:
+      context: .
+      dockerfile: WebApplication3/Dockerfile
+    depends_on:
+    - webapplication2
 
   rabbitmq:
     image: rabbitmq:3-management
     environment:
-        - RABBITMQ_USERNAME=rabbituser
-        - RABBITMQ_PASSWORD=ljkafkjnL12
+      - RABBITMQ_USERNAME=rabbituser
+      - RABBITMQ_PASSWORD=ljkafkjnL12
     ports:
-        - 5672:5672
-        - 15672:15672
+      - 5672:5672
+      - 15672:15672
+      

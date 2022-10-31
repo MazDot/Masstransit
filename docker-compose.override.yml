@@ -15,6 +15,13 @@ services:
       - "8086:80"
       - "44004:443"
 
+  webapplication3:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "8087:80"
+      - "44005:443"
+
   rabbitmq:
     container_name: rabbitmq
     restart: always

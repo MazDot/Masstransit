@@ -1,10 +1,7 @@
 using ClassLibrary1;
 using MassTransit;
-using WebApplication1.InterfaceMessage;
 using WebApplication1.Messages;
 using WebApplication2;
-using WebApplication2.Consumer;
-using WebApplication2.InterfaceMessage;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,65 +14,52 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddMassTransit(x =>
 {
-    x.AddConsumer<ThirdConsumer>();
-    x.AddConsumer<InterfaceInProjConsumer>();
-    x.AddConsumer<InterfaceSharedConsumer>();
+    x.AddConsumer<SharedMessageConsumer>();
     x.UsingRabbitMq((ctx, cfg) =>
     {
 
-        cfg.ReceiveEndpoint("Third_Queue", e =>
+        #region WorkingSharedMessageConfig
+        cfg.ReceiveEndpoint("Shared_Queue", e =>
         {
-            //e.Bind("WebApplication1.Messages:ThirdMessage", d =>
-            //{
-            //    d.ExchangeType = "topic";
-            //    d.RoutingKey = "WA1.Test.WA2";
-            ////});
-            //e.Bind<ThirdMessage>(d =>
-            //{
-            //    d.ExchangeType = "topic";
-            //    d.RoutingKey = "WA1.Test.WA2";
-            //});
-
-            e.Consumer<ThirdConsumer>(ctx);
-            //e.ConfigureConsumer<ThirdConsumer>(ctx);
+            e.ConfigureConsumeTopology = false;
+            //also one more config : x.AddConsumer<ThirdConsumer>(); before x.UsingRabbitMq(...)
+            e.ConfigureConsumer<SharedMessageConsumer>(ctx);
         });
+        #endregion
 
-        cfg.ReceiveEndpoint("C1_Queue", e =>
-        {
-            e.Bind<C1Message>(d =>
-            {
-                d.ExchangeType = "topic";
-                d.RoutingKey = "WA2.Test.WA1";
-            });
-        });
+        //cfg.Publish<C1Message>(d =>
+        //{
+        //    d.Durable = true;
+        //    d.AutoDelete = true;
+        //    d.ExchangeType = "topic";
+        //});
 
-        cfg.Publish<C1Message>(d =>
+        //cfg.ReceiveEndpoint("C1_Queue", e =>
+        //{
+        //    e.ConfigureConsumeTopology = false;
+        //    e.Bind<C1Message>(d =>
+        //    {
+        //        d.ExchangeType = "topic";
+        //        d.RoutingKey = "WA2.Test.WA1";
+        //    });
+        //});
+
+        cfg.Publish<SecondSharedMessage>(d =>
         {
-            d.Durable = false;
+            d.Durable = true;
             d.AutoDelete = true;
             d.ExchangeType = "topic";
         });
 
-        cfg.ReceiveEndpoint("interfaceSharedTopic", e =>
+        cfg.ReceiveEndpoint("SecondShared_Queue", e =>
         {
-            //e.Bind<InterfaceSharedMessage>(d =>
-            //{
-            //    d.ExchangeType = "topic";
-            //    d.RoutingKey = "WA1.InterfaceShared.WA2";
-            //});
-            e.Consumer<InterfaceSharedConsumer>(ctx);
+            e.ConfigureConsumeTopology = false;
+            e.Bind<SecondSharedMessage>(d =>
+            {
+                d.ExchangeType = "topic";
+                d.RoutingKey = "WA2.Test.WA3";
+            });
         });
-
-        cfg.ReceiveEndpoint("interfaceInProjTopic", e =>
-        {
-            //e.Bind<InterfaceWA1Message>(d =>
-            //{
-            //    d.ExchangeType = "topic";
-            //    d.RoutingKey = "WA1.InterfaceInProj.WA2";
-            //});
-            e.Consumer<InterfaceInProjConsumer>(ctx);
-        });
-
 
     });
 });
