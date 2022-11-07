@@ -13,21 +13,18 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddMassTransit(x =>
 {
     x.AddConsumer<SecondSharedMessageConsumer>();
-    x.AddConsumer<ThirdSharedMessageConsumer>();
+    x.AddConsumer<SecondSharedMessageConsumerJunior>();
     x.UsingRabbitMq((ctx, cfg) =>
     {
 
-        cfg.ReceiveEndpoint("SecondShared_Queue", e =>
+        #region MultipleConsumerForTopicExchangeConfig
+        cfg.ReceiveEndpoint("Second_Shared_Queue", e =>
         {
             e.ConfigureConsumeTopology = false;
             e.ConfigureConsumer<SecondSharedMessageConsumer>(ctx);
-        });
-
-        cfg.ReceiveEndpoint("ThirdShared_Queue", e =>
-        {
-            e.ConfigureConsumeTopology = false;
-            e.ConfigureConsumer<ThirdSharedMessageConsumer>(ctx);
-        });
+            e.ConfigureConsumer<SecondSharedMessageConsumerJunior>(ctx);
+        }); 
+        #endregion
 
     });
 });

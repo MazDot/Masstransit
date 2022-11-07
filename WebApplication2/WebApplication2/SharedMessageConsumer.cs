@@ -14,7 +14,7 @@ namespace WebApplication2
 
         public Task Consume(ConsumeContext<SharedMessage> context)
         {
-            _endpoint.Publish<SecondSharedMessage>(new { Text = "sssss" },l=>l.SetRoutingKey("WA2.Test.WA3"));
+            _endpoint.Publish<SecondSharedMessage>(new { Text = "sssss" },l=>l.SetRoutingKey("WA2.Second.WA3"));
             return Task.CompletedTask;
         }
     }

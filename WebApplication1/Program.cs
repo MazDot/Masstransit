@@ -24,7 +24,6 @@ builder.Services.AddMassTransit(x =>
             d.Durable = true;
             d.AutoDelete = true;
             d.ExchangeType = "topic";
-
         });
 
         cfg.ReceiveEndpoint("Shared_Queue", e =>
@@ -35,60 +34,11 @@ builder.Services.AddMassTransit(x =>
                 d.ExchangeType = "topic";
                 d.RoutingKey = "WA1.Test.WA2";
             });
+            e.ExclusiveConsumer = true;
+            //e.AutoStart = false;
+            //e.PrefetchCount = 0;
         });
         #endregion
-
-        cfg.Publish<ThirdSharedMessage>(d =>
-        {
-            d.Durable = true;
-            d.AutoDelete = true;
-            d.ExchangeType = "topic";
-
-        });
-
-        cfg.ReceiveEndpoint("ThirdShared_Queue", e =>
-        {
-            e.ConfigureConsumeTopology = false;
-            e.Bind<ThirdSharedMessage>(d =>
-            {
-                d.ExchangeType = "topic";
-                d.RoutingKey = "WA1.Test.WA3";
-            });
-        });
-
-        //cfg.Publish<C1Message>(d =>
-        //{
-        //    d.Durable = true;
-        //    d.AutoDelete = true;
-        //    d.ExchangeType = "topic";
-        //});
-
-        //cfg.ReceiveEndpoint("C1_Queue", e =>
-        //{
-        //    e.ConfigureConsumeTopology = false;
-        //    e.Bind<C1Message>(d =>
-        //    {
-        //        d.ExchangeType = "topic";
-        //        d.RoutingKey = "WA2.Test.WA1";
-        //    });
-        //});
-
-        //cfg.Publish<SecondSharedMessage>(d =>
-        //{
-        //    d.Durable = true;
-        //    d.AutoDelete = true;
-        //    d.ExchangeType = "topic";
-        //});
-
-        //cfg.ReceiveEndpoint("SecondShared_Queue", e =>
-        //{
-        //    e.ConfigureConsumeTopology = false;
-        //    e.Bind<SecondSharedMessage>(d =>
-        //    {
-        //        d.ExchangeType = "topic";
-        //        d.RoutingKey = "WA2.Test.WA3";
-        //    });
-        //});
 
     });
 });

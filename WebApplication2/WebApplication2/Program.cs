@@ -22,28 +22,11 @@ builder.Services.AddMassTransit(x =>
         cfg.ReceiveEndpoint("Shared_Queue", e =>
         {
             e.ConfigureConsumeTopology = false;
-            //also one more config : x.AddConsumer<ThirdConsumer>(); before x.UsingRabbitMq(...)
             e.ConfigureConsumer<SharedMessageConsumer>(ctx);
         });
         #endregion
 
-        //cfg.Publish<C1Message>(d =>
-        //{
-        //    d.Durable = true;
-        //    d.AutoDelete = true;
-        //    d.ExchangeType = "topic";
-        //});
-
-        //cfg.ReceiveEndpoint("C1_Queue", e =>
-        //{
-        //    e.ConfigureConsumeTopology = false;
-        //    e.Bind<C1Message>(d =>
-        //    {
-        //        d.ExchangeType = "topic";
-        //        d.RoutingKey = "WA2.Test.WA1";
-        //    });
-        //});
-
+        #region MultipleConsumerForTopicExchangeConfig
         cfg.Publish<SecondSharedMessage>(d =>
         {
             d.Durable = true;
@@ -51,15 +34,19 @@ builder.Services.AddMassTransit(x =>
             d.ExchangeType = "topic";
         });
 
-        cfg.ReceiveEndpoint("SecondShared_Queue", e =>
+        cfg.ReceiveEndpoint("Second_Shared_Queue", e =>
         {
             e.ConfigureConsumeTopology = false;
             e.Bind<SecondSharedMessage>(d =>
             {
                 d.ExchangeType = "topic";
-                d.RoutingKey = "WA2.Test.WA3";
+                d.RoutingKey = "WA2.Second.WA3";
             });
-        });
+            e.ExclusiveConsumer = true;
+            //e.AutoStart = false;
+            //e.PrefetchCount = 0;
+        }); 
+        #endregion
 
     });
 });

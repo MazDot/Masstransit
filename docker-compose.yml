@@ -7,15 +7,15 @@ services:
       context: .
       dockerfile: WebApplication1/Dockerfile
     depends_on:
-    - rabbitmq
+    - webapplication2
 
   webapplication2:
     image: ${DOCKER_REGISTRY-}webapplication2
     build:
       context: .
       dockerfile: WebApplication2/WebApplication2/Dockerfile
-    depends_on: 
-    - webapplication1
+    depends_on:
+    - webapplication3
 
   webapplication3:
     image: ${DOCKER_REGISTRY-}webapplication3
@@ -23,7 +23,7 @@ services:
       context: .
       dockerfile: WebApplication3/Dockerfile
     depends_on:
-    - webapplication2
+    - rabbitmq
 
   rabbitmq:
     image: rabbitmq:3-management
