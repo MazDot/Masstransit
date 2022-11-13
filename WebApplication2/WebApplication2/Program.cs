@@ -15,6 +15,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddMassTransit(x =>
 {
     x.AddConsumer<SharedMessageConsumer>();
+    x.AddConsumer<ConsumerSideMessageConsumer>();
     x.UsingRabbitMq((ctx, cfg) =>
     {
 
@@ -45,8 +46,28 @@ builder.Services.AddMassTransit(x =>
             e.ExclusiveConsumer = true;
             //e.AutoStart = false;
             //e.PrefetchCount = 0;
-        }); 
+        });
         #endregion
+
+        cfg.Publish<ConsumerSideMessage>(d =>
+        {
+            d.Durable = true;
+            d.AutoDelete = true;
+            d.ExchangeType = "topic";
+        });
+
+        cfg.ReceiveEndpoint("ConsumerSide_Queue", e =>
+        {
+            e.ConfigureConsumeTopology = false;
+            e.Bind<ConsumerSideMessage>(d =>
+            {
+                d.ExchangeType = "topic";
+                d.RoutingKey = "WA1.ConsumerSide.WA2";
+            });
+            e.ConfigureConsumer<ConsumerSideMessageConsumer>(ctx);
+            //e.AutoStart = false;
+            //e.PrefetchCount = 0;
+        });
 
     });
 });

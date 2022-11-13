@@ -33,10 +33,9 @@ namespace WebApplication1.Controllers
         [HttpGet("{Text}/GetAnother")]
         public async Task<IActionResult> GetAnother(string Text)
         {
-            await _endpoint.Publish<ThirdSharedMessage>(new { Text = Text }, x =>
+            await _endpoint.Publish<ConsumerSideMessage>(new { Text = Text }, x =>
             {
-                x.SetRoutingKey("WA1.Test.WA3");
-
+                x.SetRoutingKey("WA1.ConsumerSide.WA2");
             });
 
             return Ok();
